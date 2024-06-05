@@ -1,5 +1,5 @@
 FROM node:14
-r
+
 WORKDIR /client
 COPY package*.json ./
 RUN npm install
