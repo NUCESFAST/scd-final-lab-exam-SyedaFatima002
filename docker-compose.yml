@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend-module-1:
+    build: ./Auth
+    depends_on:
+      - mongo
+    ports:
+      - "3001:3000"
+
+  backend-module-2:
+    build: ./Classrooms
+    depends_on:
+      - mongo
+    ports:
+      - "3002:3000"
+
+  backend-module-3:
+    build: ./event-bus
+    depends_on:
+      - mongo
+    ports:
+      - "3003:3000"
+
+  backend-module-4:
+    build: ./Post
+    depends_on:
+      - mongo
+    ports:
+      - "3004:3000"
+
+  frontend:
+    build: ./client
+    ports:
+      - "5000:5000"
+
+volumes:
+  mongo-data:
